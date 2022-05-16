@@ -44,7 +44,7 @@ public:
         
         int len = nums.size();
         int ind1 = findInd1(nums, len);
-        // cout << "Ind1:\t" << ind1 << endl;
+        cout << "Ind1:\t" << ind1 << endl;
         
         if (ind1 == -1) { // not found
             reverse(nums.begin(), nums.end());
@@ -52,10 +52,10 @@ public:
         }
         
         int ind2 = findInd2(nums, len, ind1);
-        // cout << "Ind2:\t" << ind2 << endl;
+        cout << "Ind2:\t" << ind2 << endl;
         
         swap(nums, ind1, ind2);
-        // cout << "Vector after Swapping:\t";
+        cout << "Vector after Swapping:\t";
         for (auto i : nums) cout << i << " ";
         
         reverseRight(nums, ind1 + 1);
