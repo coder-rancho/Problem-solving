@@ -4,27 +4,27 @@
  */
 var merge = function(intervals) {
     
-    let compFunc = (a, b) => {
-        return a[0] - b[0];
+    if ( intervals.length == 0 ) return intervals;
+    
+    intervals.sort( (a, b) => a[0] - b[0]) // -ve => a < b
+    
+    let mergedIntervals = []
+    let temp = intervals[0]
+    
+    for (let i = 1; i < intervals.length; i++) {
+        let interval = intervals[i]
+        
+        // merge condition
+        if ( interval[0] <= temp[1] ) {
+            temp[1] = interval[1] > temp[1] ? interval[1] : temp[1];
+        }
+        else {
+            mergedIntervals.push(temp)
+            temp = interval
+        }
     }
     
-    let sortedIntervals = intervals.sort(compFunc);
-    let mergedIntervals = [];
-    let mergedInterval = sortedIntervals[0];
-    let low = 0, high = 1;
+    mergedIntervals.push(temp)
     
-    sortedIntervals.forEach( interval => {
-        
-        if ( interval[low] <= mergedInterval[high] ) { // can be merged
-            if ( interval[high] > mergedInterval[high] ) {
-                mergedInterval[high] = interval[high];
-            }
-        } else {
-            mergedIntervals.push(mergedInterval);
-            mergedInterval = interval;
-        }
-    })
-    mergedIntervals.push(mergedInterval); // last mergedInterval
-    
-    return mergedIntervals;
-};
+    return mergedIntervals
+}
