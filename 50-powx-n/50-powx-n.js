@@ -5,7 +5,11 @@
  */
 var myPow = function(x, n) {
     
-    return Math.pow(x, n);
+    return n == 0 ? 1
+        : n == 1 ? x
+        : n == -1 ? 1/x
+        : n % 2 == 0 ? (myPow(x, n/2))**2
+        : x * myPow(x, n-1);
     
     if (n == 0) return 1
     
