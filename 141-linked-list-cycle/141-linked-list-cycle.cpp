@@ -8,21 +8,37 @@
  */
 class Solution {
 public:
+//     bool hasCycle(ListNode *head) {
+        
+//         if (!head) return false;
+        
+//         ListNode* node = head;
+//         unordered_map <int, ListNode*> mp;
+        
+//         while (node -> next) {
+            
+//             if ( mp[node->next->val] == node -> next) return true;
+            
+//             mp[node -> val] = node;
+//             node = node -> next;
+//         }
+//         return false;
+        
+//     }
     bool hasCycle(ListNode *head) {
         
-        if (!head) return false;
+        if (!head || !(head->next)) return false;
         
-        ListNode* node = head;
-        unordered_map <int, ListNode*> mp;
+        ListNode* slow = head;
+        ListNode* fast = head->next;
         
-        while (node -> next) {
+        while (slow && fast && fast -> next) {
             
-            if ( mp[node->next->val] == node -> next) return true;
+            if (slow == fast) return true;
             
-            mp[node -> val] = node;
-            node = node -> next;
+            slow = slow -> next;
+            fast = fast -> next -> next;
         }
         return false;
-        
     }
 };
