@@ -32,7 +32,7 @@ public:
         ListNode* slow = head;
         ListNode* fast = head->next;
         
-        while (slow && fast && fast -> next) {
+        while (fast && fast -> next) {
             
             if (slow == fast) return true;
             
