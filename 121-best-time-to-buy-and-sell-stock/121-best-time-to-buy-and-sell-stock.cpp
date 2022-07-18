@@ -1,23 +1,24 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int buy = prices[0];
-        int sell = prices[0];
-        // int len = prices.size();
+        int buyi = 0;
+        int selli = 0;
         int maxProfit = 0;
         
-        for (auto i : prices) {
+        for (int i = 0; i < prices.size(); i++) {
+            int price = prices[i];
             
-            if (i < buy) {
-                buy = i;
-                sell = i;
+            if (price > prices[selli]) {
+                selli = i;
+                int profit = prices[selli] - prices[buyi];
+                
+                if (profit > maxProfit) maxProfit = profit;
             }
-            else if (i > sell) {
-                sell = i;
-                maxProfit = (sell - buy) > maxProfit ? sell - buy: maxProfit;
+            else if (price < prices[buyi]) {
+                buyi = selli = i;
             }
-            // cout << " i:" << i << " buy:" << buy << " sell:" << sell << " prof:" << maxProfit << endl;
         }
-        return maxProfit;        
+        
+        return maxProfit;
     }
 };
