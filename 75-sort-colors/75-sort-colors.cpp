@@ -7,16 +7,18 @@ public:
         
         while (p <= r) {
             
-            if (nums[p] == 2) {
-                nums[p] = nums[r];
-                nums[r--] = 2;
-            }
-            else if (nums[p] == 0) {
-                nums[p++] = nums[l];
-                nums[l++] = 0;
-            }
-            else {
-                p++;
+            switch (nums[p]) {
+            
+                case 0:
+                    swap(nums[l++], nums[p++]);
+                    break;
+                    
+                case 1:
+                    p++;
+                    break;
+                    
+                case 2:
+                    swap(nums[r--], nums[p]);
             }
         }
     }
