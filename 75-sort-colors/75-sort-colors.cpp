@@ -19,7 +19,6 @@ public:
                     
                 case 2:
                     swap(nums[r--], nums[p]);
-                    break;
             }
         }
     }
