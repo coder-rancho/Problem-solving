@@ -1,19 +1,22 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        int count[3] = {0};
-        int len = nums.size();
+        int l = 0;
+        int p = 0;
+        int r = nums.size() - 1;
         
-        for (auto i : nums) {
-            count[i]++;
-        }
+        while (p <= r) {
             
-        int indx = 0;
-        for (int c = 0; c < 3; c++) {
-            int elemCount = count[c];
-            
-            while(elemCount--) {
-                nums[indx++] = c;
+            if (nums[p] == 2) {
+                nums[p] = nums[r];
+                nums[r--] = 2;
+            }
+            else if (nums[p] == 0) {
+                nums[p++] = nums[l];
+                nums[l++] = 0;
+            }
+            else {
+                p++;
             }
         }
     }
