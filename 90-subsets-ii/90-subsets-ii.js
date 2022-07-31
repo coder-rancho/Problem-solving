@@ -8,7 +8,6 @@ var subsetsWithDup = function(nums) {
         
         if (l > r) {
             let copy = [...subset];
-            console.log(dp);
             let copyStr = copy.join();
             
             if (dp[copyStr]) return;
