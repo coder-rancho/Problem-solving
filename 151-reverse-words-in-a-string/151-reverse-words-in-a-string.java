@@ -6,7 +6,7 @@ class Solution {
 
         int start = s.length() - 1;
         int end = s.length();
-        String result = "";
+        ArrayList<String> words = new ArrayList<>();
 
         while(s.charAt(end-1) == ' ') end -= 1;
         start = end - 1;
@@ -14,7 +14,7 @@ class Solution {
         while (start >= 0) {
 
             if (s.charAt(start) == ' ') {
-                result += s.substring(start+1, end) + " ";
+                words.add(s.substring(start+1, end));
                 end = start;
                 while(end > 0 && s.charAt(end-1) == ' ') end -= 1;
                 start = end;
@@ -22,9 +22,9 @@ class Solution {
             start -= 1;
         }
 
-        if (s.charAt(0) != ' ') result += s.substring(0, end) + " ";
+        if (s.charAt(0) != ' ') words.add(s.substring(0, end));
 
-        return result.substring(0, result.length() - 1);
+        return String.join(" ", words);
     }
 
     public static void main(String[] args) {
