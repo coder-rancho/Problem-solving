@@ -1,33 +1,58 @@
 class Solution {
 
-    public String longestPalindrome(String str) {
+    public String longestPalindrome(String s) {
 
-        if (str == "") return "";
+        if (s.length() == 0) return "";
 
-        String lp = Character.toString(str.charAt(0));
+        String lp = Character.toString(s.charAt(0));
 
-        for (int s = 0; s < str.length(); ++s) {
-            if (lp.length() >= (str.length() - s)) break;
-            for (int e = str.length() - 1; e > s; --e) {
-                if (lp.length() >= (e - s + 1)) break;
-                if (isPalindrome(str, s, e)) {
-                    int len = e - s + 1;
-                    if (len > lp.length()) lp = str.substring(s, e+1);
-                    break;
+        // check for even palindrome
+        int l = 0;
+        int r = 1;
+        while(r < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                int left = l; int right = r; int len = 0;
+                while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+                    left -= 1;
+                    right += 1;
+                    len += 2;
+                }
+                
+                if (len > lp.length()) {
+                    lp = s.substring(left+1, right);
                 }
             }
+            l += 1;
+            r += 1;
         }
-        return lp;        
+
+        //check for odd palindrome
+        l = 0;
+        r = 2;
+        while (r < s.length()) {
+            if (s.charAt(l) == s.charAt(r)) {
+                int left = l; int right = r; int len = 1;
+                while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+                    left -= 1;
+                    right += 1;
+                    len += 2;
+                }
+
+                if (len > lp.length()) {
+                    lp = s.substring(left+1, right);
+                }
+            }
+            l += 1;
+            r += 1;
+        }
+        return lp;
     }
 
-    private boolean isPalindrome(String str, int left, int right) {
-        while(left < right) if (str.charAt(left++) != str.charAt(right--)) return false;
-        return true;
-    }
+    
 
     public static void main(String[] args) {
         Solution o = new Solution();
-        String str = "cbbd";
+        String str = "cbbbbaadfrhhhhasdfdsa";
         System.out.println(
             o.longestPalindrome(str)
         );
