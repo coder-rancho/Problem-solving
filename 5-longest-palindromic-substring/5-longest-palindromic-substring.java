@@ -7,7 +7,9 @@ class Solution {
         String lp = Character.toString(str.charAt(0));
 
         for (int s = 0; s < str.length(); ++s) {
+            if (lp.length() >= (str.length() - s)) break;
             for (int e = str.length() - 1; e > s; --e) {
+                if (lp.length() >= (e - s + 1)) break;
                 if (isPalindrome(str, s, e)) {
                     int len = e - s + 1;
                     if (len > lp.length()) lp = str.substring(s, e+1);
@@ -30,4 +32,4 @@ class Solution {
             o.longestPalindrome(str)
         );
     }
-}                   
+}
