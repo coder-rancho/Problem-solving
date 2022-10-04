@@ -20,10 +20,8 @@ class Solution {
                 if (j == pat.length()) return i - j;
             }
             else {
-                while (txt.charAt(i) != pat.charAt(j) && j > 0) {
-                    j = lps[j-1];
-                }
-                if (txt.charAt(i) != pat.charAt(j)) i++;
+                if (j != 0) j = lps[j-1];
+                else i++;
             }
         }
         return -1;
