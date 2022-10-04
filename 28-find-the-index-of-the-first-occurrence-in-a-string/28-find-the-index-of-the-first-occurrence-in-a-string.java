@@ -1,69 +1,71 @@
 class Solution {
+
     public int strStr(String haystack, String needle) {
+
         if (haystack.length() < needle.length()) return -1;
         if (haystack.equals(needle)) return 0;
-        
-        int[] Z = Solution.calculateZ(needle+"$"+haystack);
+        return kmp(haystack, needle);
+    }
 
-        for (int i = 0; i < Z.length; i++) {
-            if (Z[i] == needle.length()) return i - needle.length() - 1;
+    static int kmp(String txt, String pat) {
+        int[] lps =  Solution.calculateLps(pat);
+        // ArrayList<Integer> indices = new ArrayList<>();  // This arraylist can be used to store all occurences of pat in txt
+        int i = 0; int j = 0;
+
+        while (i < txt.length()) {
+            
+            if (txt.charAt(i) == pat.charAt(j)) {
+                i++;
+                j++;
+                if (j == pat.length()) return i - j;
+            }
+            else {
+                while (txt.charAt(i) != pat.charAt(j) && j > 0) {
+                    j = lps[j-1];
+                }
+                if (txt.charAt(i) != pat.charAt(j)) i++;
+            }
         }
-
         return -1;
     }
 
-    public static int[] calculateZ(String str) {
-        // Initialize Z-box;
-        int left = 0;
-        int right = 0;
-        int[] Z = new int[str.length()];
-        
-        // Calculate Z[k] where, k = (1 -> n-1)
-        for (int k = 1; k < str.length(); k++) {
-            
-            // if k falls beyound Z-bok then calculate new Z-box
-            if (k > right) {
-                left = right = k;
+    static int[] calculateLps(String pat) {
+        int[] lps = new int[pat.length()];
+        int i = 1; int len = 0;
+        lps[0] = 0;
 
-                while (
-                    right < str.length() 
-                    && str.charAt(right) == str.charAt(right-left)
-                ){
-                    right++;
-                }
-                Z[k] = right - left;
-                right--;
-            // else try to copy the z values from prev results
+        while (i < pat.length()) {
+
+            if (pat.charAt(i) == pat.charAt(len)) {
+                lps[i++] = ++len;
             } else {
-                int k1 = k - left;
-
-                if ( (k + Z[k1] - 1) < right) {
-                    Z[k] = Z[k1];
-                } else {
-                    left = k;
-
-                    while (
-                        right < str.length() 
-                        && str.charAt(right) == str.charAt(right-left)
-                    ){
-                        right++;
-                    }
-                    Z[k] = right - left;
-                    right--;
+                
+                while (pat.charAt(i) != pat.charAt(len) && len > 0) {
+                    len = lps[len - 1];
                 }
+
+                if (pat.charAt(i) != pat.charAt(len)) lps[i++] = 0;
             }
         }
-        return Z;
+
+        return lps;
     }
 
     public static void main(String[] args) {
         Solution o = new Solution();
-        String haystack = "mississippi";
-        String needle = "issip";
+        String haystack = "aabaaacaaaaad";
+        String needle = "aaa";
 
-        System.out.println(o.strStr(haystack, needle));
+        // Check calculation of lps
+        // for (int lps : Solution.calculateLps("acacaxa")) System.out.print(Integer.toString(lps) + " "); // 0 0 1 2 3 0 1
+
+        // Check for kmp
+        // System.out.println(Solution.kmp("aabaaacaaaad", "aaa")); // 3
+
+        System.out.println(
+            o.strStr(haystack, needle)
+        );
+
+        
     }
 }
-
-
-
