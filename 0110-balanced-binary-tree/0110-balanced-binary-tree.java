@@ -22,7 +22,7 @@ class Solution {
     }
     
     int dfs(TreeNode root) {
-        if (root == null) return 0;
+        if (root == null || !flag) return 0;
         int left = dfs(root.left);
         int right = dfs(root.right);
         
