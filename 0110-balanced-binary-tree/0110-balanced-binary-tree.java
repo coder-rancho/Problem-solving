@@ -26,9 +26,7 @@ class Solution {
         int left = dfs(root.left);
         int right = dfs(root.right);
         
-        int diff = left - right;
-        
-        if (diff > 1 || diff < -1) flag = false;
+        if (Math.abs(left - right) > 1) flag = false;
         
         return Math.max(left, right) + 1;
     }
