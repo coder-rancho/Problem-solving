@@ -26,44 +26,28 @@ class Solution {
         List<List<Integer>> result = new ArrayList<List<Integer>>(); 
 
         if (root == null) return result;
-
-        HashMap<TreeNode, Integer> nodeLevel = new HashMap<>();
+        
         Queue<TreeNode> q = new LinkedList<>();
-        ArrayList<Integer> nodeVals = new ArrayList<>();
-
-        int curLevel = 0;
-        nodeLevel.put(root, curLevel);
- 
         q.add(root);
-
-        while( !q.isEmpty() ) {
-            TreeNode node = q.remove();
-            System.out.println(node.val + " " + nodeLevel.get(node) + " " + node.left + " " + node.right);
+        
+        while(!q.isEmpty()) {
+            int n = q.size();
+            ArrayList<Integer> nodeVals = new ArrayList<>();
             
-
-            if (nodeLevel.get(node) != curLevel) {
-                // System.out.println(nodeLevel.get(node) + " " + node.val + "    " + curLevel);
-                result.add(nodeVals);
-                nodeVals = new ArrayList<Integer>();
-                curLevel = nodeLevel.get(node);
-            }
-
-            nodeVals.add(node.val);
-            
-
-            if (node.left != null) {
+            for (int i = 0; i < n; i++) {
+                TreeNode node = q.remove();
+                
+                if (node == null) continue;
+                
+                nodeVals.add(node.val);
                 q.add(node.left);
-                nodeLevel.put(node.left, curLevel+1);
-            }
-
-            if (node.right != null) {
                 q.add(node.right);
-                nodeLevel.put(node.right, curLevel+1);
             }
             
+            if (nodeVals.size() > 0) result.add(nodeVals);
         }
-        result.add(nodeVals);
-
+        
+        
         return result;
     }
 }
