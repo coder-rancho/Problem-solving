@@ -11,21 +11,15 @@
  */
 class Solution {
 public:
-    void change(TreeNode*root,TreeNode* &prev)
-    {
-        if(root==NULL)return ;
-        
-        change(root->right,prev);
-        change(root->left,prev);
-        
-        root->right=prev;
-        root->left=NULL;
-        prev=root;
-    }
     void flatten(TreeNode* root) {
-        if(root==NULL)return ;
-        
-        TreeNode*prev=NULL;
-        change(root,prev);
+        _flatten(root, NULL);
+    }
+
+    TreeNode* _flatten(TreeNode* root, TreeNode* tail) {
+        if (root == NULL) return tail;
+        TreeNode* newTail = _flatten(root->right, tail);
+        root->right = _flatten(root->left, newTail);
+        root->left = NULL;
+        return root;
     }
 };
