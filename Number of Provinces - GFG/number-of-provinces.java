@@ -32,16 +32,17 @@ class GFG {
 //User function Template for Java
 
 class Solution {
-    static ArrayList<ArrayList<Integer>> adjL;
+    static ArrayList<ArrayList<Integer>> adjM;
     static boolean[] visited;
     
     static int numProvinces(ArrayList<ArrayList<Integer>> adj, int V) {
         // code here
-        adjL = initAdjL(adj);
-        visited = new boolean[adjL.size()];
+        // adjL = initAdjL(adj);
+        adjM = adj;
+        visited = new boolean[adj.size()];
         int count = 0;
         
-        for (int i = 0; i < adjL.size(); i++) {
+        for (int i = 0; i < adj.size(); i++) {
             if (visited[i]) continue;
             count++;
             dfs(i);
@@ -52,7 +53,8 @@ class Solution {
     static void dfs(int node) {
         if (visited[node]) return;
         visited[node] = true;
-        for (int n : adjL.get(node)) dfs(n);
+        for (int i = 0; i < adjM.size(); i++)
+            if (adjM.get(node).get(i) == 1) dfs(i);
     }
     
     
