@@ -32,32 +32,34 @@ class DriverClass {
 /*Complete the function below*/
 
 class Solution {
-    // Function to detect cycle in a directed graph.
+   
+   // Using KAHN'S ALGORITHMS (BFS topological sort)
     public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
         // code here
-        boolean[] visited = new boolean[V];
+        int[] indegree = new int[V];
+        Queue<Integer> q = new LinkedList<>();
+        Stack<Integer> stack = new Stack<>();
         
-        for (int node = 0; node < V; ++node) {
-            if (visited[node]) continue;
-            if ( dfsCheck(adj, node, new HashSet<Integer>(), visited) ) return true;
+        for (int u = 0; u < V; ++u) {
+            for (int v : adj.get(u)) indegree[v]++;
         }
-        return false;
-    }
-    
-    private boolean dfsCheck(
-        ArrayList<ArrayList<Integer>> adj,
-        int node,
-        HashSet<Integer> path,
-        boolean[] visited
-    ) {
-        if (visited[node]) return path.contains(node);
-        visited[node] = true;
-        path.add(node);
         
-        for (int nbr : adj.get(node)) {
-            if ( dfsCheck(adj, nbr, path, visited) ) return true;
-            path.remove(nbr);
+        for (int i = 0; i < V; ++i) {
+            if (indegree[i] == 0) q.add(i);
         }
-        return false;
+        
+        int i = 0;
+        
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            i++;
+            
+            for (int nbr : adj.get(node)) {
+                indegree[nbr]--;
+                if (indegree[nbr] == 0) q.add(nbr);
+            }
+        }
+
+        return i != V;
     }
 }
