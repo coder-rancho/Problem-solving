@@ -60,37 +60,35 @@ class Main {
 
 class Solution
 {
-    //Function to return list containing vertices in Topological order. 
+    // USING KAHN'S ALGORITHM (DFS)
+    
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
-        // add your code here
+        int[] indegree = new int[V];
+        Queue<Integer> q = new LinkedList<>();
         Stack<Integer> stack = new Stack<>();
-        boolean[] visited = new boolean[V];
         
-        for (int node = 0; node < V; ++node) {
-            if (visited[node]) continue;
-            dfsSort(adj, node, visited, stack);
+        for (int u = 0; u < V; ++u) {
+            for (int v : adj.get(u)) indegree[v]++;
+        }
+        
+        for (int i = 0; i < V; ++i) {
+            if (indegree[i] == 0) q.add(i);
         }
         
         int[] ans = new int[V];
+        int i = 0;
         
-        for (int i = 0; i < V; ++i) ans[i] = stack.pop();
-        
-        return ans;
-    }
-    
-    static void dfsSort(
-        ArrayList<ArrayList<Integer>> adj,
-        int node,
-        boolean[] visited,
-        Stack<Integer> stack
-    ) {
-        if (visited[node]) return;
-        visited[node] = true;
-        
-        for (int nbr : adj.get(node)) {
-            dfsSort(adj, nbr, visited, stack);
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            ans[i++] = node;
+            
+            for (int nbr : adj.get(node)) {
+                indegree[nbr]--;
+                if (indegree[nbr] == 0) q.add(nbr);
+            }
         }
-        stack.push(node);
+
+        return ans;
     }
 }
